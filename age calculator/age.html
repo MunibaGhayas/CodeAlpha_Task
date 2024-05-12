@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box-container">
+            <h2>Age Calculator</h2>
+            <div class="input-box">
+                <div><h3>Enter your Birth Date</h3></div>
+                <div>
+                    <input type="date" id="date"/>
+                    <button onclick="calculateAge()">Calculate</button>
+                </div>                       
+            </div>  
+            <div id="ageResult" ></div>
+        </div>
+    </div>
+</body>
+<script>
+    const input = document.getElementById("date");
+    function calculateAge(){
+        const birthDate = new Date(input.value);
+        const today = new Date();
+
+        let year = today.getFullYear() - birthDate.getFullYear();
+        let month = today.getMonth() - birthDate.getMonth();
+        let day = today.getDate() - birthDate.getDate();
+
+        const birthDateThisYear = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+        const diffMs = today - birthDateThisYear;
+        let days = Math.round(diffMs / (1000 * 60 * 60 * 24));
+        console.log("days", days);
+
+        if(days < 0){
+            day = days += 365 + ((today.getFullYear()) % 4 == 0? 1 : 0);
+        }
+        if(days > 0){
+            day = days + ((today.getFullYear()) % 4 == 0? 1 : 0);
+        }
+
+        if (month < 0) {
+          year--;
+          month += 12;
+        }
+        document.getElementById("ageResult").innerHTML = "you are " +  year  + " years " +  month  + " months " + " and " + day + " days " +  " old";
+    }
+</script>
+</html>
